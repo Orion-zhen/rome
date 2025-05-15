@@ -1,0 +1,23 @@
+# macOS 拉的史
+.DS_Store
+
+# VS Code 拉的史
+.vscode/
+*.code-workspace
+
+# 安装文件
+user.yaml
+installation.yaml
+
+# 同步文件夹
+sync/
+
+# 部署文件
+build
+*.userdb
+
+# 用户自定义文件
+*.custom.yaml
+
+# 语言模型
+*.gram
