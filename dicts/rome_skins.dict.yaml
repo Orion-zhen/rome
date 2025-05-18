@@ -1,0 +1,26 @@
+# Rime dictionary
+# encoding: utf-8
+
+---
+name: rome_skins
+version: "2025.05"
+sort: by_weight
+...
+# 人名
+# 常用语
+哈哈	ha ha	99
+macOS	mac	99
+可以	ke yi	99
+# 工具
+颜文字	yan wen zi	100
+若木音	ruo mu yin	100
+# 输入法主题
+# 注意要用 Tab 来分隔
+浮光染木	fu guang ran mu	99
+青冥初照	qing ming chu zhao	99
+曦和驭枝	xi he yu zhi	99
+悬圃流华	xuan pu liu hua	99
+烛龙息影	zhu long xi ying	99
+玄枵栖羽	xuan xiao qi yu	99
+幽都扶荫	you du fu yin	99
+崦嵫余烬	yan zi yu jin	99
