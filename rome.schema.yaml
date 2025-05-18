@@ -3,7 +3,6 @@ schema:
   name: 若木音
   version: "2025.05"
   dependencies:
-    - radical_pinyin
     - melt_eng
 
 menu:
@@ -47,7 +46,6 @@ engine:
   segmentors:
     - ascii_segmentor # 標識西文段落
     - matcher # 標識符合特定規則的段落，如網址、反查等
-    - affix_segmentor@radical_reverse_lookup
     - abc_segmentor # 標識常規的文字段落
     - punct_segmentor # 標識句讀段落
     - fallback_segmentor # 標識其他未標識段落
@@ -60,7 +58,7 @@ engine:
     - lua_translator@*mint_calculator_translator # 计算器（lua 动态表达式）
     - table_translator@melt_eng # 中文模式下的英文输入
     - table_translator@cn_en # 中英混合词汇
-    - reverse_lookup_translator@radical_reverse_lookup
+    - reverse_lookup_translator
     # - lua_translator@*force_gc
     - echo_translator # ※ 没有候选词，返回字符
   filters:
@@ -244,19 +242,7 @@ speller:
     - derive/([qwrtypsdfghjklzxcbnm])([aeio])ng$/$1ng/ # lng → lang、leng、ling、long
     - derive/un$/ong/ # yuntong = yongtong
 
-radical_reverse_lookup:
-  tag: radical_lookup
-  dictionary: radical_pinyin
-  enable_completion: false
-  enable_sentence: false
-  prefix:
-    "Uu"
-    # comment_format:
-  #   - erase/^.*$// # 删除注释
-  tips: 〔拆字〕
-
 reverse_lookup:
-  tags: [radical_lookup]
   overwrite_comment: true
   dictionary: dicts/rime_ice.8105
 
