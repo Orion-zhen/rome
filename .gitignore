@@ -21,3 +21,17 @@ build
 
 # 语言模型
 *.gram
+
+opencc/
+
+# 忽略自动下载的词库文件，减小仓库体积
+dicts/frost.*
+dicts/frost_cell.*
+dicts/rime_ice.*
+dicts/cn_dicts/
+dicts/en_dicts/
+dicts/opencc/
+
+# 临时文件
+temp/
+tmp/
