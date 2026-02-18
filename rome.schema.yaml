@@ -44,6 +44,7 @@ engine:
     - key_binder                 # 按键绑定处理器，处理常用快捷键
     - speller                    # 拼写处理器，接收字母按键
     - punctuator                 # 标点处理器
+    - grammar                    # 语言模型处理器：基于上下文调整候选词权重
     - selector                   # 候选词选择处理器
     - navigator                  # 光标移动处理器
     - express_editor             # 表达式编辑器，支持回车确认等行为
@@ -228,8 +229,8 @@ speller:
     ### 模糊音方案 (Fuzzy Pinyin)
     - derive/([aeiou])ng$/$1gn/  # 支持手抖输入：dang -> dagn
     ## 简拼与缩写生成 logic (Abbreviation)
-    - derive/^([a-z]).+$/$1/     # 为每个音节生成首字母映射（简拼支持）
-    - derive/^([zcs]h).+$/$1/     # 特别处理 zh/ch/sh 的简写映射
+    # - derive/^([a-z]).+$/$1/     # [已注释] 移除首字母简拼的强制派生，降低简拼权重，实现全拼优先
+    # - derive/^([zcs]h).+$/$1/     # [已注释] 移除 zh/ch/sh 简拼派生
     - abbrev/^([a-z]).+$/$1/     # 将首字母作为正式简拼缩写
     - abbrev/^([a-z]{2,}).+$/$1/ # 允许使用音节的前两个字母作为缩写（如 zenme -> zem）
     ### 万能纠错规则 (Auto Correction)
@@ -341,3 +342,12 @@ key_binder:
     # 联想/预测模式下的按键处理
     - { when: predicting, accept: comma, send: comma } # 联想状态下支持逗号上屏
     - { when: predicting, accept: period, send: period } # 联想状态下支持句号上屏
+
+# -----------------------------------------------------------------------------
+# 语言模型配置 (Language Model)
+# 需确保 librime-octagram 插件已安装，并下载对应 .gram 文件至根据目录
+# -----------------------------------------------------------------------------
+grammar:
+  language: zh-hans-t-essay-tgw   # 语言模型数据文件，使用三元模型 (tgw) 以获得更精准的上下文预测
+  collocation_max_length: 5     # 匹配上下文的最大长度（建议 3-5）
+  collocation_min_length: 2     # 匹配上下文的最小长度（通常设为 2）
