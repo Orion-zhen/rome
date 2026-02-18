@@ -1,10 +1,10 @@
 ---
 name: melt_eng # 注意name和文件名一致
-version: "2024.02.11"
+version: "2025.05"
 sort: by_weight
 use_preset_vocabulary: true
-# 此处为 输入法所用到的词库，既补充拓展词库的地方
+# 英文词库，由 GitHub Actions 自动从上游同步更新
+# 来源: 雾凇拼音 (rime-ice) en_dicts
 import_tables:
-  - dicts/rime_ice.en_ext # 雾凇拼音-英文扩展
-  - dicts/rime_ice.en # 雾凇拼音-英文Base
-  # - easy_en # Easy-en基础
+  - dicts/rime_ice.en     # 雾凇拼音 英文基础词库（~20k常见单词）
+  - dicts/rime_ice.en_ext # 雾凇拼音 英文扩展（缩写、互联网词汇）

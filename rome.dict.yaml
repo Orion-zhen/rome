@@ -2,13 +2,63 @@
 name: rome # 注意name和文件名一致
 version: "2025.05"
 sort: by_weight
-# 此处为 输入法所用到的词库，既补充拓展词库的地方
-# 雾凇拼音词库，由Github Robot自动更新
+# 此处为输入法所用到的词库，既补充拓展词库的地方
+# 词库由 GitHub Actions 自动从上游同步更新
 import_tables:
-  - dicts/rome_skins # rome 皮肤
-  - dicts/rime_ice.8105 # 霧凇拼音 常用字集合
-  - dicts/rime_ice.41448 # 霧凇拼音 完整字集合
-  - dicts/rime_ice.base # 雾凇拼音 基础词库
-  - dicts/rime_ice.ext # 雾凇拼音 扩展词库
-  - dicts/other_kaomoji # 颜文字表情（按`VV`呼出)
-  - dicts/rime_ice.others # 雾凇拼音 others词库(用于自动纠错)
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 自定义词库（最高优先级）
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/rome_skins # rome 个人自定义词库
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 字表 · 来源: 白霜拼音 (rime-frost)
+  # 白霜词库基于7.45亿字高质量语料重新统计字频词频
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/frost.8105   # 常用字表（《通用规范汉字表》8105字）
+  - dicts/frost.41448  # 大字表（Unihan 41448字）
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 主力词库 · 来源: 白霜拼音 (rime-frost)
+  # 词频经过大规模语料归一化处理，比雾凇更精准
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/frost.base   # 基础词库（高频词，含两字词及调频）
+  - dicts/frost.ext    # 扩展词库（中频词，含多音字注音）
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 补充词库 · 来源: 雾凇拼音 (rime-ice)
+  # 腾讯词向量大词库，覆盖面广，作为兜底补充
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/rime_ice.tencent # 腾讯词向量（大词库，覆盖面最广）
+  - dicts/rime_ice.others  # 杂项词库（用于自动纠错等）
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 细胞词库 · 来源: 白霜拼音 (rime-frost)
+  # 各领域专业词汇，提升专业场景输入体验
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/frost_cell.medication       # 医药
+  - dicts/frost_cell.industry_product # 工业产品
+  - dicts/frost_cell.exthot           # 热门扩展
+  - dicts/frost_cell.chess            # 棋类
+  - dicts/frost_cell.chess2           # 棋类扩展
+  - dicts/frost_cell.animal           # 动物
+  - dicts/frost_cell.game             # 游戏
+  - dicts/frost_cell.idiom            # 成语
+  - dicts/frost_cell.sport            # 运动
+  - dicts/frost_cell.media            # 媒体
+  - dicts/frost_cell.shulihua         # 数理化
+  - dicts/frost_cell.food             # 美食
+  - dicts/frost_cell.inputmethod      # 输入法
+  - dicts/frost_cell.history          # 历史
+  - dicts/frost_cell.place            # 地名
+  - dicts/frost_cell.geography        # 地理
+  - dicts/frost_cell.name2            # 人名扩展
+  - dicts/frost_cell.literature       # 文学
+  - dicts/frost_cell.music            # 音乐
+  - dicts/frost_cell.computer         # 计算机
+  - dicts/frost_cell.composite        # 综合
+  - dicts/frost_cell.name             # 人名
+
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # 颜文字 & Emoji
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  - dicts/other_kaomoji # 颜文字表情（按`VV`呼出）
