@@ -1,6 +1,6 @@
 ---
 name: rome # 注意name和文件名一致
-version: "2025.05"
+version: "2026.02"
 sort: by_weight
 # 此处为输入法所用到的词库，既补充拓展词库的地方
 # 词库由 GitHub Actions 自动从上游同步更新

@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 # Fork From: https://github.com/rime/librime/blob/3bc65c990546aa2062ecd1eb593d54d2949644cd/data/minimal/default.yaml
-config_version: "2025.05"
+config_version: "2026.02"
 
 # 以下内容, 实际会由 default.custom.yaml 和输入法 schema 配置所覆写
 schema_list:

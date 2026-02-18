@@ -5,7 +5,7 @@
 schema:
   schema_id: rome                # 方案内部 ID，需与文件名 rome.schema.yaml 对应
   name: 若木音                   # 菜单中显示的方案名称
-  version: "2025.05"             # 方案版本号
+  version: "2026.02"             # 方案版本号
   dependencies:                  # 定义方案依赖，此处依赖英文方案以实现词典导入
     - melt_eng                   # 依赖 melt_eng (英文联想)
 
