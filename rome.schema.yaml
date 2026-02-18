@@ -38,7 +38,7 @@ switches:                        # 状态开关定义，可通过快捷键或菜
 # -----------------------------------------------------------------------------
 engine:
   processors:
-    - lua_processor@*select_character # Lua 处理器：实现“以词定字”功能
+    - lua_processor@*select_character_processor # Lua 处理器：实现“以词定字”功能
     - ascii_composer             # 处理西文模式及中西文切换
     - recognizer                 # 与 matcher 搭配，识别正则模式（如 URL、计算器等）
     - key_binder                 # 按键绑定处理器，处理常用快捷键
@@ -57,21 +57,21 @@ engine:
   translators:
     - punct_translator           # 转换标点符号
     - script_translator          # 核心拼音翻译器（主词库）
-    - lua_translator@*mint_date_time_translator # Lua 翻译器：输出当前日期、时间、星期
+    - lua_translator@*date_time_translator # Lua 翻译器：输出当前日期、时间、星期
     - lua_translator@*number_translator         # Lua 翻译器：将数字转换为金额大写、罗马数字等
-    - lua_translator@*chineseLunarCalendar_translator # Lua 翻译器：农历信息支持
-    - lua_translator@*mint_calculator_translator     # Lua 翻译器：简易计算器功能
+    - lua_translator@*lunar_translator # Lua 翻译器：农历信息支持
+    - lua_translator@*calculator_translator     # Lua 翻译器：简易计算器功能
     - table_translator@melt_eng  # 码表翻译器：中文模式下的英文输入建议
     - table_translator@cn_en     # 码表翻译器：中英混合词汇/短语
     - reverse_lookup_translator  # 反查翻译器
-    - lua_translator@*force_gc   # Lua 翻译器：强制执行垃圾回收，控制内存占用
+    # - lua_translator@*force_gc   # [已移除] 强制执行垃圾回收，控制内存占用
     - echo_translator            # 无候选词时，回显输入字符
   filters:
     - lua_filter@*corrector_filter       # Lua 过滤器：错音错字纠偏提示（如输入 "geiyu" 提示 "给予[jǐ yǔ]"）
-    - lua_filter@*autocap_filter         # Lua 过滤器：英文首字母自动大写
-    - lua_filter@*pin_cand_filter        # Lua 过滤器：用户自定义固定位候选词
+    - lua_filter@*english_autocap_filter         # Lua 过滤器：英文首字母自动大写
+    - lua_filter@*pinned_candidates_filter        # Lua 过滤器：用户自定义固定位候选词
     - lua_filter@*long_word_filter       # Lua 过滤器：长词优先策略，优化输入体验
-    - lua_filter@*demote_english_words   # Lua 过滤器：降低低频或干扰性英文词汇的权重
+    - lua_filter@*english_words_demoter_filter   # Lua 过滤器：降低低频或干扰性英文词汇的权重
     - simplifier@emoji                   # 转换器：实现 Emoji 候选项叠加
     - simplifier@traditionalize          # 转换器：简繁体即时转换
     - uniquifier                         # 过滤器：对最终候选列表进行去重
@@ -96,7 +96,7 @@ long_word_filter:                # 长词优先 Lua 配置
   count: 2                       # 每次输入最多提升多少个长词的优先级
   idx: 4                         # 将选出的长词插入到候选列表的第几个位置（从 1 开始计）
 
-pin_cand_filter:                 # 置顶候选项 Lua 配置 (格式: 编码 <Tab> 字词1 <Space> 字词2)
+pinned_candidates_filter:                 # 置顶候选项 Lua 配置 (格式: 编码 <Tab> 字词1 <Space> 字词2)
   - "d\t的 地 得"                # 常用单字母置顶
   - "l\t了 啦"
   - "s\t是 时"
@@ -166,7 +166,7 @@ pin_cand_filter:                 # 置顶候选项 Lua 配置 (格式: 编码 <T
   - "na li\t那里 哪里"
   - "na xie\t那些 哪些"
 
-demote_english_words:            # 降低英文词优先级配置
+english_words_demoter_filter:            # 降低英文词优先级配置
   mode:                          # 模式设定：all (全面降低) | none (不降低) | custom (仅 words 定义的)
   idx: 2                         # 将匹配的英文词降低到第几个候选项之后
   words:                         # 在 custom 模式下生效的单词列表

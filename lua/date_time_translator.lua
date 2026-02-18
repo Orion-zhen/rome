@@ -28,7 +28,7 @@ local function make_hight_quality_candidate(inputText, startSeg, endSeg, text, c
 end
 
 
-function mint_date_time_translator(input, seg)
+local function date_time_translator(input, seg)
 
     -- 日期格式说明：
 
@@ -117,4 +117,4 @@ function mint_date_time_translator(input, seg)
     end
 end
 
-return mint_date_time_translator
+return date_time_translator

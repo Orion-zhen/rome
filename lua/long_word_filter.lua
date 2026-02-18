@@ -28,8 +28,8 @@ function M.func(input)
         if i < M.idx then
             i = i + 1
             yield(cand)
-        -- 长词直接 yield，其余的放到 l 里
-        elseif leng <= firstWordLength or cand.text:find("[%a%d]") then
+        -- 长词或单字直接 yield，其余的放到 l 里
+        elseif (leng <= firstWordLength and leng ~= 1) or cand.text:find("[%a%d]") then
             table.insert(l, cand)
         else
             yield(cand)
