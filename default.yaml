@@ -131,6 +131,10 @@ key_binder:
     - { when: paging, accept: comma, send: Page_Up } # , 用于向前翻页
     - { when: has_menu, accept: equal, send: Page_Down } # = 用于向后翻页
     - { when: has_menu, accept: period, send: Page_Down } # . 用于向后翻页
+    - { when: has_menu, accept: Tab, send: Down } # Tab 切换候选词
+    - { when: has_menu, accept: Shift+Tab, send: Up } # Shift+Tab 切换候选词
+    - { when: has_menu, accept: ISO_Left_Tab, send: Up } # 兼容 Linux 的 Shift+Tab
+    - { when: has_menu, accept: Shift+ISO_Left_Tab, send: Up } # 兼容 Linux 的 Shift+Tab
     - { when: predicting, accept: comma, send: comma }
     - { when: predicting, accept: period, send: period }
 

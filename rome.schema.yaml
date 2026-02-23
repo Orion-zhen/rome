@@ -338,6 +338,12 @@ key_binder:
     - { when: paging, accept: comma, send: Page_Up }   # 逗号向前翻页
     - { when: has_menu, accept: equal, send: Page_Down } # 等号向后翻页
     - { when: has_menu, accept: period, send: Page_Down } # 句号向后翻页
+    
+    # 使用 Tab 键在一个候选框中切换候选词
+    - { when: has_menu, accept: Tab, send: Down } # Tab 切换候选词
+    - { when: has_menu, accept: Shift+Tab, send: Up } # Shift+Tab 切换候选词
+    - { when: has_menu, accept: ISO_Left_Tab, send: Up } # 兼容 Linux 的 Shift+Tab
+    - { when: has_menu, accept: Shift+ISO_Left_Tab, send: Up } # 兼容 Linux 的 Shift+Tab
 
     # 联想/预测模式下的按键处理
     - { when: predicting, accept: comma, send: comma } # 联想状态下支持逗号上屏
