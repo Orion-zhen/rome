@@ -53,6 +53,7 @@ cp "$TEMP_DIR/rime-ice/en_dicts/en.dict.yaml"     "$DICT_DEST/rime_ice.en.dict.y
 cp "$TEMP_DIR/rime-ice/en_dicts/en_ext.dict.yaml" "$DICT_DEST/rime_ice.en_ext.dict.yaml"
 
 echo "   → 同步 OpenCC 数据..."
+mkdir -p $REPO_ROOT/opencc
 cp -r "$TEMP_DIR/rime-ice/opencc"/* "$REPO_ROOT/opencc/" 2>/dev/null || true
 
 echo "   → 同步中英混输词库..."
