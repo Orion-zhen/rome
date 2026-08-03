@@ -28,15 +28,15 @@ git clone --depth 1 https://github.com/gaboolic/rime-frost.git "$TEMP_DIR/rime-f
 
 echo "   → 同步核心词库..."
 mkdir -p "$DICT_DEST"
-cp "$TEMP_DIR/rime-frost/cn_dicts/8105.dict.yaml"  "$DICT_DEST/frost.8105.dict.yaml"
-cp "$TEMP_DIR/rime-frost/cn_dicts/41448.dict.yaml" "$DICT_DEST/frost.41448.dict.yaml"
-cp "$TEMP_DIR/rime-frost/cn_dicts/base.dict.yaml"  "$DICT_DEST/frost.base.dict.yaml"
-cp "$TEMP_DIR/rime-frost/cn_dicts/ext.dict.yaml"   "$DICT_DEST/frost.ext.dict.yaml"
+cp -f "$TEMP_DIR/rime-frost/cn_dicts/8105.dict.yaml"  "$DICT_DEST/frost.8105.dict.yaml"
+cp -f "$TEMP_DIR/rime-frost/cn_dicts/41448.dict.yaml" "$DICT_DEST/frost.41448.dict.yaml"
+cp -f "$TEMP_DIR/rime-frost/cn_dicts/base.dict.yaml"  "$DICT_DEST/frost.base.dict.yaml"
+cp -f "$TEMP_DIR/rime-frost/cn_dicts/ext.dict.yaml"   "$DICT_DEST/frost.ext.dict.yaml"
 
 echo "   → 同步细胞词库..."
 for file in "$TEMP_DIR/rime-frost/cn_dicts_cell"/*.dict.yaml; do
   filename=$(basename "$file")
-  cp "$file" "$DICT_DEST/frost_cell.${filename}"
+  cp -f "$file" "$DICT_DEST/frost_cell.${filename}"
 done
 
 # 2. 克隆雾凇拼音
@@ -45,19 +45,19 @@ echo "🧊 [2/4] 正在拉取雾凇拼音 (rime-ice)..."
 git clone --depth 1 https://github.com/iDvel/rime-ice.git "$TEMP_DIR/rime-ice"
 
 echo "   → 同步腾讯词库和杂项..."
-cp "$TEMP_DIR/rime-ice/cn_dicts/tencent.dict.yaml" "$DICT_DEST/rime_ice.tencent.dict.yaml"
-cp "$TEMP_DIR/rime-ice/cn_dicts/others.dict.yaml"  "$DICT_DEST/rime_ice.others.dict.yaml"
+cp -f "$TEMP_DIR/rime-ice/cn_dicts/tencent.dict.yaml" "$DICT_DEST/rime_ice.tencent.dict.yaml"
+cp -f "$TEMP_DIR/rime-ice/cn_dicts/others.dict.yaml"  "$DICT_DEST/rime_ice.others.dict.yaml"
 
 echo "   → 同步英文词库..."
-cp "$TEMP_DIR/rime-ice/en_dicts/en.dict.yaml"     "$DICT_DEST/rime_ice.en.dict.yaml"
-cp "$TEMP_DIR/rime-ice/en_dicts/en_ext.dict.yaml" "$DICT_DEST/rime_ice.en_ext.dict.yaml"
+cp -f "$TEMP_DIR/rime-ice/en_dicts/en.dict.yaml"     "$DICT_DEST/rime_ice.en.dict.yaml"
+cp -f "$TEMP_DIR/rime-ice/en_dicts/en_ext.dict.yaml" "$DICT_DEST/rime_ice.en_ext.dict.yaml"
 
 echo "   → 同步 OpenCC 数据..."
-mkdir -p $REPO_ROOT/opencc
-cp -r "$TEMP_DIR/rime-ice/opencc"/* "$REPO_ROOT/opencc/" 2>/dev/null || true
+mkdir -p "$REPO_ROOT/opencc"
+cp -rf "$TEMP_DIR/rime-ice/opencc"/. "$REPO_ROOT/opencc/" 2>/dev/null || true
 
 echo "   → 同步中英混输词库..."
-[ -f "$TEMP_DIR/rime-ice/cn_dicts/cn_en.txt" ] && cp "$TEMP_DIR/rime-ice/cn_dicts/cn_en.txt" "$DICT_DEST/rime_ice.cn_en.txt" || true
+[ -f "$TEMP_DIR/rime-ice/cn_dicts/cn_en.txt" ] && cp -f "$TEMP_DIR/rime-ice/cn_dicts/cn_en.txt" "$DICT_DEST/rime_ice.cn_en.txt" || true
 
 # 3. 清理旧文件
 echo ""
@@ -73,18 +73,16 @@ rm -f "$DICT_DEST/rime_ice.ext.dict.yaml"
 echo ""
 echo "🧠 [4/4] 配置 Octagram 语言模型..."
 MODEL_URL_BASE="https://raw.githubusercontent.com/lotem/rime-octagram-data/hans"
-# 下载二元 (bgw) 和三元 (tgw) 模型
+# 下载二元 (bgw) 和三元 (tgw) 模型；默认覆盖已有文件，以便运行脚本即可更新
 for model in "zh-hans-t-essay-bgw.gram" "zh-hans-t-essay-tgw.gram"; do
-    if [ ! -f "$REPO_ROOT/$model" ]; then
-        echo "   ⬇️  正在下载 $model (可能需要一些时间)..."
-        if curl -L -o "$REPO_ROOT/$model" "$MODEL_URL_BASE/$model"; then
-            echo "   ✅ 下载成功: $model"
-        else
-            echo "   ❌ 下载失败: $model"
-            echo "      请检查网络连接或手动下载至项目根目录。"
-        fi
+    echo "   ⬇️  正在下载并覆盖 $model (可能需要一些时间)..."
+    TEMP_MODEL="$TEMP_DIR/$model"
+    if curl -fL -o "$TEMP_MODEL" "$MODEL_URL_BASE/$model"; then
+        mv -f "$TEMP_MODEL" "$REPO_ROOT/$model"
+        echo "   ✅ 更新成功: $model"
     else
-        echo "   ✅ 已存在: $model (跳过下载)"
+        echo "   ❌ 下载失败，保留原文件: $model"
+        echo "      请检查网络连接或手动下载至项目根目录。"
     fi
 done
 
