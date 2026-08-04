@@ -281,7 +281,7 @@ speller:
     - derive/ong$/on/             # 支持连打拼写：lon -> long
     - derive/([tl])eng$/$1en/     # 支持连打拼写：ten -> teng
     - derive/([qwrtypsdfghjklzxcbnm])([aeio])ng$/$1ng/ # 通配：lng -> lang/leng/ling/long
-    - derive/un$/ong/             # 方言/口音映射支持
+    # - derive/un$/ong/           # 方言/口音映射支持（会导致 yun→yong、cun→cong 等候选串音）
 
 # -----------------------------------------------------------------------------
 # 反查与辅助映射 (Reverse Lookup & Patterns)
